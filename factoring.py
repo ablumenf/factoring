@@ -33,7 +33,7 @@ def isPrime(N):
         return False
     s = N-1
     while s % 2 == 0: # write N-1 = 2^k*s
-        s >>= 1
+        s //= 2
     for i in range(50): # 50 iterations has failure rate of <= 1/2^100
         a = randint(1, N-1)
         exp = s
