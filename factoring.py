@@ -46,6 +46,7 @@ def isPrime(N):
     return True
 
 def findFactor(n):
+    maxiters = 1.2533*sqrt(n)
     x = randint(1, n-1)
     y = x
     d = 1
@@ -53,7 +54,7 @@ def findFactor(n):
     a = randint(1, n-1)
     b = randint(1, n-1)
     while d == 1 or d == n: # a match should be found within sqrt(pi*n/2) iterations on average
-        if iters > 1.2533*sqrt(n): # otherwise, choose a new function f (we may be running into a k-cycle if d == n)
+        if iters > maxiters: # otherwise, choose a new function f (we may be running into a k-cycle if d == n)
             a = randint(1, n-1)
             b = randint(1, n-1)
             x = randint(1, n-1)
@@ -75,7 +76,7 @@ def findPrimeFactor(n, factors):
 def factor(n, factors):
     while n % 2 == 0:
         factors.append(2)
-        n >>= 1
+        n //= 2
     while n % 3 == 0:
         factors.append(3)
         n //= 3
@@ -96,7 +97,6 @@ def findAllFactors(primeFactors, allFactors):
                 temp.append(f * primeFactors[i])
         allFactors += temp
     allFactors.sort()
-
 
 def main():
     s = ""
