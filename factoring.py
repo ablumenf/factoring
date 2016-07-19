@@ -1,5 +1,4 @@
 from random import randint
-from math import sqrt
 
 __author__ = 'Aaron Blumenfeld'
 
@@ -11,8 +10,9 @@ __author__ = 'Aaron Blumenfeld'
 # gcd(f^i(x) - f^j(x), n) will give us a nontrivial factor of n (unless we're unlucky
 # and every factor of n divides f^i(x) - f^j(x). We must have a collision by the
 # Pigeonhole Principle (if the gcd is n, we choose a new function f -- the expectation
-# for number of iterations required is sqrt(pi*n/2)). In fact, one can show it's possible
-# to find a match where j = 2i. This means we need not store any large tables.
+# for number of iterations required is sqrt(pi*p/2) <= sqrt(pi*n/4) since p <= n/2). In fact,
+# one can show it's possible to find a match where j = 2i. This means we need not store
+# any large tables.
 
 def gcd(a, b):
     while b > 0:
@@ -46,7 +46,7 @@ def isPrime(N):
     return True
 
 def findFactor(n):
-    maxiters = 1.2533*sqrt(n)
+    maxiterssq = 0.7854*n # pi/4 * n
     x = randint(1, n-1)
     y = x
     d = 1
@@ -54,7 +54,7 @@ def findFactor(n):
     a = randint(1, n-1)
     b = randint(1, n-1)
     while d == 1 or d == n: # a match should be found within sqrt(pi*n/2) iterations on average
-        if iters > maxiters: # otherwise, choose a new function f (we may be running into a k-cycle if d == n)
+        if iters*iters > maxiterssq: # otherwise, choose a new function f (we may be running into a k-cycle if d == n)
             a = randint(1, n-1)
             b = randint(1, n-1)
             x = randint(1, n-1)
